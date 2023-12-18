@@ -1,0 +1,35 @@
+create database gt;
+use gt;
+
+CREATE TABLE compras (
+    id INTEGER PRIMARY KEY not null auto_increment,
+    dt_compra DATE,
+    total_compra DECIMAL,
+    fk_passagens_id INTEGER
+);
+
+CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY not null auto_increment,
+    nome VARCHAR(100),
+    email VARCHAR(50),
+    senha VARCHAR(20),
+    fk_compras_id INTEGER
+);
+
+CREATE TABLE passagens (
+    id INTEGER PRIMARY KEY not null auto_increment,
+    destino VARCHAR(20),
+    dt_saida DATE,
+    hr_saida TIME,
+    preco DECIMAL
+);
+ 
+ALTER TABLE compras ADD CONSTRAINT FK_compras_2
+    FOREIGN KEY (fk_passagens_id)
+    REFERENCES passagens (id)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE usuarios ADD CONSTRAINT FK_usuarios_2
+    FOREIGN KEY (fk_compras_id)
+    REFERENCES compras (id)
+    ON DELETE CASCADE;
